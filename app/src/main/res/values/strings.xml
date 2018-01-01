@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">AG_Automation_Demo</string>
+    <string name="action_settings">Settings</string>
+    <string name="main_activity_header">Saved Loan Estimates</string>
+    <string name="new_entry">New Entry</string>
+    <string name="new_entry_dialog_input_hint">Enter the name of vehicle here</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">Ok</string>
+    <string name="edit_name">Edit Name</string>
+    <string name="save_name">Save Name</string>
+    <string name="save_entry">Save Entry</string>
+    <string name="msrp">MSRP</string>
+    <string name="down_payment">Down Payment</string>
+    <string name="loan_term">Loan Term</string>
+    <string name="apr">APR</string>
+    <string name="months_suffix">months</string>
+    <string name="percent_suffix">%</string>
+    <string name="loan_info" formatted="false">$%s/mo after $%s down payment</string>
+    <string name="value_required">Value required.</string>
+    <string name="error">Error</string>
+    <string name="loan_amount_error">Loan amount is less than or equal to $0</string>
+
+</resources>
