@@ -2,8 +2,8 @@ package com.ag_automation_demo.page_objects;
 
 import com.ag_automation_demo.Assert;
 import com.ag_automation_demo.R;
-import com.ag_automation_demo.utility.Utility;
 
+import static android.support.test.espresso.Espresso.closeSoftKeyboard;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
@@ -41,6 +41,7 @@ public class MainPage implements IPageObject
     {
         onView(withId(R.id.et_input))
                 .perform(typeText(name));
+        closeSoftKeyboard();
 
         return this;
     }
@@ -55,22 +56,6 @@ public class MainPage implements IPageObject
 
     public CalculatorPage confirmNewEntryDialog()
     {
-        onView(withText(R.string.ok))
-                .perform(click());
-
-        return new CalculatorPage();
-    }
-
-    // Flow into next page
-    public CalculatorPage addNewEntry()
-    {
-        onView(withId(R.id.fab))
-                .perform(click());
-
-        int randomSuffix = Utility.generateRandomInteger(0, 10000);
-        onView(withId(R.id.et_input))
-                .perform(typeText("Test car " + randomSuffix));
-
         onView(withText(R.string.ok))
                 .perform(click());
 

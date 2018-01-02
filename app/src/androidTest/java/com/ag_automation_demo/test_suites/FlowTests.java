@@ -8,6 +8,7 @@ import com.ag_automation_demo.MainActivity;
 import com.ag_automation_demo.R;
 import com.ag_automation_demo.page_objects.CalculatorPage;
 import com.ag_automation_demo.page_objects.MainPage;
+import com.ag_automation_demo.utility.Utility;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -28,22 +29,23 @@ public class FlowTests
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(
             MainActivity.class);
 
-//    @Before
-//    public void initValidString() {
-//        // Specify a valid string.
-//        mStringToBetyped = "Espresso";
-//    }
-
     @Test
     public void addNewValidEntry()
     {
+        String vehicleName = "Smoke Test - " +
+                Utility.generateRandomInteger(0, 5000);
+
         MainPage mainPage = new MainPage();
         CalculatorPage calculatorPage = mainPage
-                .addNewEntry();
+                .clickNewEntryFab()
+                .addNewEntryName(vehicleName)
+                .confirmNewEntryDialog();
 
+        // Save entry with default values (randomized msrp)
         calculatorPage
                 .clickSaveEntry();
 
-        Assert.viewDisplayedWithId(R.id.tv_vehicle_name);
+        Assert.viewDisplayedWithIdAndText(R.id.tv_vehicle_name, vehicleName);
+        Assert.viewDisplayedWithId(R.id.tv_loan_info);
     }
 }

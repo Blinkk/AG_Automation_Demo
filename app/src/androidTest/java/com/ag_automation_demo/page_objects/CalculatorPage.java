@@ -44,7 +44,8 @@ public class CalculatorPage implements IPageObject
     public CalculatorPage modifyVehicleName(String value)
     {
         onView(withId(R.id.et_current_vehicle))
-                .perform(click(), clearText(), typeText(value));
+                .perform(clearText(), typeText(value));
+        closeSoftKeyboard();
 
         return this;
     }

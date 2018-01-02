@@ -26,7 +26,7 @@ public class CalculatorPageTests
     @Test
     public void editVehicleName()
     {
-        String vehicleName = "Test";
+        String vehicleName = "Test-Edit";
 
         CalculatorPage calculatorPage = new CalculatorPage();
         calculatorPage
@@ -38,23 +38,21 @@ public class CalculatorPageTests
     }
 
     @Test
-    public void verifyLoanAmountErrorDisplayed()
+    public void saveEntryWithLoanAmountError()
     {
         CalculatorPage calculatorPage = new CalculatorPage();
-
         calculatorPage
                 .modifyCalculation(CalculatorPage.CalcField.MSRP, "50000")
                 .modifyCalculation(CalculatorPage.CalcField.DOWN_PAYMENT, "51000")
                 .clickSaveEntry();
 
-        Assert.viewDisplayedWithId(R.id.tv_error_message);
+        Assert.viewDisplayedWithIdAndText(R.id.tv_error_message, R.string.loan_amount_error);
     }
 
     @Test
-    public void verifyCalcFieldErrorsDisplayed()
+    public void saveEntryWithBlankData()
     {
         CalculatorPage calculatorPage = new CalculatorPage();
-
         calculatorPage
                 .modifyCalculation(CalculatorPage.CalcField.MSRP, "")
                 .modifyCalculation(CalculatorPage.CalcField.DOWN_PAYMENT, "")
