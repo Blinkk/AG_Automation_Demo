@@ -32,19 +32,6 @@ public class MainPageTests
     }
 
     @Test
-    public void enterNewEntryName()
-    {
-        String entryName = "Test";
-
-        MainPage mainPage = new MainPage();
-        mainPage
-                .clickNewEntryFab()
-                .addNewEntryName(entryName);
-
-        Assert.viewDisplayedWithText(entryName);
-    }
-
-    @Test
     public void cancelNewEntry()
     {
         MainPage mainPage = new MainPage();
@@ -56,13 +43,25 @@ public class MainPageTests
     }
 
     @Test
-    public void confirmNewEntry()
+    public void confirmNewValidEntry()
     {
         MainPage mainPage = new MainPage();
         CalculatorPage calculatorPage = mainPage
                 .clickNewEntryFab()
+                .addNewEntryName("Test")
                 .confirmNewEntryDialog();
 
         calculatorPage.isLoadSuccessful();
+    }
+
+    @Test
+    public void confirmNewInvalidEntry()
+    {
+        MainPage mainPage = new MainPage();
+        mainPage
+                .clickNewEntryFab()
+                .confirmNewEntryDialog();
+
+        Assert.errorDisplayedWithTextOnInputWithId(R.id.et_input, R.string.value_required);
     }
 }

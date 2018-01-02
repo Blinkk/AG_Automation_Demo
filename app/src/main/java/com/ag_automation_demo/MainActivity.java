@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -46,46 +48,59 @@ public class MainActivity extends AppCompatActivity
                 // Inflate alert dialog xml
                 LayoutInflater li = LayoutInflater.from(_context);
                 View dialogView = li.inflate(R.layout.custom_dialog, null);
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                        _context);
-                alertDialogBuilder.setTitle(R.string.new_entry);
-                alertDialogBuilder.setIcon(R.mipmap.ic_launcher);
-                alertDialogBuilder.setView(dialogView);
+                final AlertDialog dialog = new AlertDialog.Builder(_context)
+                        .setTitle(R.string.new_entry)
+                        .setIcon(R.mipmap.ic_launcher)
+                        .setView(dialogView)
+                        .setCancelable(false)
+                        .setPositiveButton(R.string.ok, null)
+                        .setNegativeButton(R.string.cancel, null)
+                        .create();
 
-                final EditText userInput = (EditText) dialogView
+                final TextInputEditText userInput = (TextInputEditText) dialogView
                         .findViewById(R.id.et_input);
 
-                alertDialogBuilder
-                        .setCancelable(false)
-                        .setPositiveButton(R.string.ok,
-                                new DialogInterface.OnClickListener()
-                                {
-                                    public void onClick(DialogInterface dialog, int id)
-                                    {
-                                        String userInputText = userInput.getText().toString();
-                                        if (Utility.isNullOrEmpty(userInputText))
-                                        {
-                                            // Error
-                                        }
-                                        Intent intent = new Intent(_context, CalculatorActivity.class);
-                                        intent.putExtra(Extra.VEHICLE_NAME, userInputText);
-                                        startActivityForResult(intent, NEW_ENTRY_REQUEST);
+                dialog.setOnShowListener(new DialogInterface.OnShowListener()
+                {
 
-                                        dialog.cancel();
-                                    }
-                                })
-                        .setNegativeButton(R.string.cancel,
-                                new DialogInterface.OnClickListener()
+                    @Override
+                    public void onShow(DialogInterface dialogInterface)
+                    {
+                        Button buttonPositive = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        buttonPositive.setOnClickListener(new View.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(View view)
+                            {
+                                String userInputText = userInput.getText().toString();
+                                if (Utility.isNullOrEmpty(userInputText))
                                 {
-                                    public void onClick(DialogInterface dialog, int id)
-                                    {
-                                        dialog.cancel();
-                                    }
-                                });
+                                    userInput.setError(getString(R.string.value_required));
+                                    return;
+                                }
 
-                // Create and show dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
+                                Intent intent = new Intent(_context, CalculatorActivity.class);
+                                intent.putExtra(Extra.VEHICLE_NAME, userInputText);
+                                startActivityForResult(intent, NEW_ENTRY_REQUEST);
+
+                                dialog.dismiss();
+                            }
+                        });
+
+                        Button buttonNegative = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+                        buttonNegative.setOnClickListener(new View.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(View view)
+                            {
+                                dialog.cancel();
+                            }
+                        });
+                    }
+                });
+
+                // Show dialog
+                dialog.show();
             }
         });
 
