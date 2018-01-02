@@ -27,7 +27,6 @@ public class MainPageTests
         MainPage mainPage = new MainPage();
         mainPage.clickNewEntryFab();
 
-        // Verify dialog elements present
         Assert.viewDisplayedWithId(R.id.ll_dialog);
         Assert.viewDisplayedWithId(R.id.et_input);
     }
@@ -42,7 +41,6 @@ public class MainPageTests
                 .clickNewEntryFab()
                 .addNewEntryName(entryName);
 
-        // Verify input was successful
         Assert.viewDisplayedWithText(entryName);
     }
 
@@ -54,7 +52,6 @@ public class MainPageTests
                 .clickNewEntryFab()
                 .cancelNewEntryDialog();
 
-        // Verify dialog no longer present
         Assert.viewDoesNotExistWithId(R.id.ll_dialog);
     }
 
@@ -66,7 +63,6 @@ public class MainPageTests
                 .clickNewEntryFab()
                 .confirmNewEntryDialog();
 
-        // Verify the next page is loaded
         calculatorPage.isLoadSuccessful();
     }
 }
